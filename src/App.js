@@ -2,78 +2,110 @@ import { useState } from "react";
 import './App.css';
 
 function App() {
-  const [scorecard, setScorecard] = useState({
-    currentPage: 1,
-    numberOfHoles: 0,
-    players: []
-  });
-
-  const [newPlayerName, setNewPlayerName] = useState("");
-
-  const handleNumberOfHolesChange = (event) => {
-    let newHoleNumber = event.target.value;
-    setScorecard({
-      ...scorecard,
-      numberOfHoles: newHoleNumber
-    });
-  };
-
-  const handleAddPlayersClick = () => {
-    setScorecard({
-      ...scorecard,
-      currentPage: 2
-    });
-  };
+  const [currentHole, setCurrentHole] = useState(0);
+  const [players, setPlayers] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [numberOfHoles, setNumberOfHoles] = useState(0);
+  const [newPlayerName, setNewPlayerName] = useState("");  
 
   const handleAddNewPlayer = () => {
-    let newPlayerArray = [...scorecard.players, newPlayerName];
-    setScorecard({
-      ...scorecard,
-      players: newPlayerArray
-    });
+    const newPlayer = { 
+      name: newPlayerName, 
+      scores: []
+    };
+
+    setPlayers([...players, newPlayer]);
     setNewPlayerName("");
+  };
+
+  const handleNextHoleClick = () => {
+    if (currentHole < numberOfHoles){
+      //there are more holes, lets put some balls in 'em
+      setCurrentHole(currentHole + 1);      
+    }else{
+      //no more holes go to a different page
+      setCurrentPage(4);
+    }
+  };
+
+  const nextHoleMessage = () => {
+    if (currentHole < numberOfHoles){
+      return "On to Hole " + (currentHole + 1);
+    }else{
+      return " Go To Totals Page ";
+    }
+    
   };
 ///TODO: create ability to delete a player
   return (
     <div className="App">
       <h1>Golf Ballin&apos; Scorecard</h1>
-      <div className={"page " + (scorecard.currentPage === 1 ? " live " : " hidden ")}>
+      <div className={"page " + (currentPage === 1 ? " live " : " hidden ")}>
         <h3>How Many Holes You Playin'?</h3>
-        <input type="number" value={scorecard.numberOfHoles} onChange={handleNumberOfHolesChange} /><label>Number of Holes</label>
+        <input type="number" value={numberOfHoles} onChange={(event)=>setNumberOfHoles(event.target.value)} /><label>Number of Holes</label>
         <br />
         <br />
-        <button disabled={scorecard.numberOfHoles <= 0} onClick={handleAddPlayersClick}>Add Players</button>
+        <button disabled={numberOfHoles <= 0} onClick={()=>setCurrentPage(2)}>Add Players</button>
       </div>
 
-      <div className={"page " + (scorecard.currentPage === 2 ? " live " : " hidden ")}>
+      <div className={"page " + (currentPage === 2 ? " live " : " hidden ")}>
         <h3>Who's Playin'?</h3>
         <div className="player-list">
-          { scorecard.players.map( (player, key) => (<div key={key}>{player}</div>)) }
+          { players.map( (player, key) => (<div key={key}>{player.name}</div>)) }
         </div>
         <div>
-          <input type="text" value={newPlayerName} onChange={(event)=>{setNewPlayerName(event.target.value)}} />
+          <input type="text" value={newPlayerName} onChange={(event)=> setNewPlayerName(event.target.value) } />
           <button disabled={newPlayerName.length === 0} onClick={handleAddNewPlayer}>Add</button>
         </div>
-        <button disabled={scorecard.players.length === 0} onClick={()=>{setScorecard({...scorecard, currentPage: 3})}}>Start Playing!</button><br />
+        <button disabled={players.length === 0} onClick={()=>{ setCurrentHole(1); setCurrentPage(3); }}>Start Playing!</button><br />
 
-        <button onClick={()=>{setScorecard({...scorecard, currentPage: 1})}}>Back</button>
+        <button onClick={() => setCurrentPage(1)}>Back</button>
       </div>
-{/* 
-TODO: create page 3 - (3+number of holes)
-each page will be a scorecard
 
-TODO: Create Page 25? Display full results and option to email?
-*/}
+      <div className={"page " + (currentPage === 3 ? " live " : " hidden ")}>
+        <h3>Hole #{currentHole}</h3>
+        
+        <div>
+          {
+            players.map( (player, key) => (
+              <div key={key}>
+                {player.name} 
+                <input type="number" value={ player.scores[currentHole] ?? 0 } 
+                  onChange={ 
+                    (event) => { 
+                      const playerListCopy = [...players];
+                      playerListCopy[key].scores = [...players[key].scores];
+                      playerListCopy[key].scores[currentHole] = event.target.value;
+                      setPlayers([...playerListCopy]); 
+                    } 
+                  } />
+              </div>
+            ) )
 
+          }
+        </div>
 
+        <button onClick={ handleNextHoleClick }>{ nextHoleMessage() }</button><br />
+      </div>
+      
+      <div className={"page " + (currentPage === 4 ? " live " : " hidden ")}>
+          <h3>Totals Page!</h3>
+          <div>
+            {
+              players.map( (player, key) => (
+                <div key={key}>{player.name} {player.scores.reduce((a,c)=> parseInt(a) + parseInt(c ?? 0), 0)}  </div>
+              )
+            )}
+          </div>
+      </div>
+            
       <div>
         <h2>Debug State</h2>
         <div>
-          Current Page {scorecard.currentPage} <br />
-          Number of Holes {scorecard.numberOfHoles} <br />
-          Players : {scorecard.players.map((player, key) => (<span key={key}>{player} </span>)) } <br />
-
-          New Player Name {newPlayerName} <br />
+          Current Page {currentPage} <br />
+          Number of Holes {numberOfHoles} <br />
+          Players : {players.map((player, key) => (<span key={key}>{player.name} {player.scores}</span>)) } <br />
+          <br />
         </div>
       </div>      
     </div>
