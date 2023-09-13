@@ -28,18 +28,59 @@ function App() {
     }
   };
 
-  const nextHoleMessage = () => {
-    if (currentHole < numberOfHoles){
-      return "On to Hole " + (currentHole + 1);
-    }else{
-      return " Go To Totals Page ";
-    }
-    
-  };
+  
 ///TODO: create ability to delete a player
   return (
     <div className="App">
       <h1>Golf Ballin&apos; Scorecard</h1>
+
+      <HoleEntryScreen 
+        currentPage={currentPage}
+        numberOfHoles={numberOfHoles}
+        setNumberOfHoles={setNumberOfHoles}
+        setCurrentPage={setCurrentPage}
+      />
+
+      <PlayerEntryScreen 
+        currentPage={currentPage}
+        players={players}
+        newPlayerName={newPlayerName}
+        setNewPlayerName={setNewPlayerName}
+        handleAddNewPlayer={handleAddNewPlayer}
+        setCurrentHole={setCurrentHole}
+        setCurrentPage={setCurrentPage}
+      />      
+
+      <HolesScreens 
+        currentPage={currentPage}
+        currentHole={currentHole}        
+        players={players}
+        setPlayers={setPlayers}
+        handleNextHoleClick={handleNextHoleClick}
+        numberOfHoles={numberOfHoles}
+      />
+
+      <TotalsPage 
+        currentPage={currentPage}
+        players={players}        
+      />       
+            
+      <div>
+        <h2>Debug State</h2>
+        <div>
+          Current Page {currentPage} <br />
+          Number of Holes {numberOfHoles} <br />
+          Players : {players.map((player, key) => (<span key={key}>{player.name} {player.scores}</span>)) } <br />
+          <br />
+        </div>
+      </div>      
+
+    </div>
+  );
+}
+
+function HoleEntryScreen({ currentPage, numberOfHoles, setNumberOfHoles, setCurrentPage }){  
+  return(
       <div className={"page " + (currentPage === 1 ? " live " : " hidden ")}>
         <h3>How Many Holes You Playin'?</h3>
         <input type="number" value={numberOfHoles} onChange={(event)=>setNumberOfHoles(event.target.value)} /><label>Number of Holes</label>
@@ -47,7 +88,11 @@ function App() {
         <br />
         <button disabled={numberOfHoles <= 0} onClick={()=>setCurrentPage(2)}>Add Players</button>
       </div>
+  );
+}
 
+function PlayerEntryScreen({ currentPage, players, newPlayerName, setNewPlayerName, handleAddNewPlayer, setCurrentHole, setCurrentPage }){
+  return(
       <div className={"page " + (currentPage === 2 ? " live " : " hidden ")}>
         <h3>Who's Playin'?</h3>
         <div className="player-list">
@@ -60,8 +105,20 @@ function App() {
         <button disabled={players.length === 0} onClick={()=>{ setCurrentHole(1); setCurrentPage(3); }}>Start Playing!</button><br />
 
         <button onClick={() => setCurrentPage(1)}>Back</button>
-      </div>
+      </div>);
+}
 
+function HolesScreens({ currentPage, currentHole, players, setPlayers, handleNextHoleClick, numberOfHoles}){
+  const nextHoleMessage = () => {
+    if (currentHole < numberOfHoles){
+      return "On to Hole " + (currentHole + 1);
+    }else{
+      return " Go To Totals Page ";
+    }
+    
+  };
+
+  return (
       <div className={"page " + (currentPage === 3 ? " live " : " hidden ")}>
         <h3>Hole #{currentHole}</h3>
         
@@ -79,6 +136,7 @@ function App() {
                       setPlayers([...playerListCopy]); 
                     } 
                   } />
+                {player.scores.reduce((a,c)=> parseInt(a) + parseInt(c ?? 0), 0)}
               </div>
             ) )
 
@@ -87,7 +145,11 @@ function App() {
 
         <button onClick={ handleNextHoleClick }>{ nextHoleMessage() }</button><br />
       </div>
-      
+  );
+}
+
+function TotalsPage({ currentPage, players }){
+  return(
       <div className={"page " + (currentPage === 4 ? " live " : " hidden ")}>
           <h3>Totals Page!</h3>
           <div>
@@ -98,17 +160,6 @@ function App() {
             )}
           </div>
       </div>
-            
-      <div>
-        <h2>Debug State</h2>
-        <div>
-          Current Page {currentPage} <br />
-          Number of Holes {numberOfHoles} <br />
-          Players : {players.map((player, key) => (<span key={key}>{player.name} {player.scores}</span>)) } <br />
-          <br />
-        </div>
-      </div>      
-    </div>
   );
 }
 
