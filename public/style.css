@@ -1,7 +1,7 @@
 html {
     margin: 0;
     padding: 0;
-    background-image: url('/images/golf-BG.jpg');
+    background-image: url('images/golf-BG.jpg');
     background-size: cover;
     background-position: center;
 }
@@ -20,7 +20,7 @@ body {
     margin: 5% auto;
     max-width: 700px;
     min-height: 80vh;
-    background-image: url('/images/paper_background.jpg');
+    background-image: url('images/paper_background.jpg');
     background-size: cover;
     background-position: center;
     padding: 2rem;
@@ -50,7 +50,7 @@ input[type="number"]{
 }
 
 button {
-    font-size: 2rem;
+    font-size: 1rem;
     padding: 0.5rem 1rem;
     box-shadow: 5px 5px 15px black;
 }
