@@ -12,6 +12,7 @@ function App() {
   const [numberOfHoles, setNumberOfHoles] = useState(1);
   const [newPlayerName, setNewPlayerName] = useState("");  
 
+  /*
   function DebugState(){
     return (
       <div>
@@ -25,7 +26,7 @@ function App() {
       </div> 
     );
   }
-
+*/
   return (
     <div className="App">
       <h1>Golf Ballin&apos; Scorecard</h1>

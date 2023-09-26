@@ -30,7 +30,7 @@ export default function PlayerEntryScreen({ currentPage, players, newPlayerName,
             <button disabled={newPlayerName.length === 0} onClick={handleAddNewPlayer}>Add</button>
           </div>
           <div className="flex">
-            <button onClick={() => setCurrentPage(1)} style={{marginRight: '2rem'}}>Back</button>
+            <button onClick={()=>window.location.reload(false)} style={{marginRight: '2rem'}}>Back</button>
             <button disabled={players.length === 0} onClick={()=>{ setCurrentHole(1); setCurrentPage(3); }}>Start Playing!</button>
           </div>
           
