@@ -9,7 +9,7 @@ export default function HolesScreens({ currentPage, currentHole, players, setPla
 
     const previousHoleMessage = () => {
       if (currentHole === 1){
-        return "Back to player select";
+        return "Edit Players";
       }else{
         return "Back to Hole " + (currentHole - 1);
       }
@@ -37,12 +37,12 @@ export default function HolesScreens({ currentPage, currentHole, players, setPla
         <div className={"page " + (currentPage === 3 ? " live " : " hidden ")}>
           <h3>Hole #{currentHole}</h3>
           
-          <div>
+          <div className="holes-data">
             {
               players.map( (player, key) => (
                 <div key={key}>
                   {player.name} 
-                  <input type="number" value={ player.scores[currentHole - 1] ?? 0 } 
+                  <input type="number" min="0" max="9" value={ player.scores[currentHole - 1] ?? 0 } 
                     onChange={ 
                       (event) => { 
                         const playerListCopy = [...players];
@@ -57,8 +57,10 @@ export default function HolesScreens({ currentPage, currentHole, players, setPla
   
             }
           </div>
-          <button onClick={ handlePreviousHoleClick }>{ previousHoleMessage() }</button>
-          <button onClick={ handleNextHoleClick }>{ nextHoleMessage() }</button><br />
+          <div className="flex">
+            <button style={{marginRight: '2rem'}} onClick={ handlePreviousHoleClick }>{ previousHoleMessage() }</button>
+            <button onClick={ handleNextHoleClick }>{ nextHoleMessage() }</button>
+          </div>
           <button onClick={ ()=>setCurrentPage(4) }>Finish Early</button>
         </div>
     );

@@ -1,0 +1,96 @@
+html {
+    margin: 0;
+    padding: 0;
+    background-image: url('/images/golf-BG.jpg');
+    background-size: cover;
+    background-position: center;
+}
+  
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    font-family: 'Rubik', sans-serif;
+    color: #011b33;
+}
+  
+.App {
+    text-align: center;
+    width: 80%;
+    margin: 5% auto;
+    max-width: 700px;
+    min-height: 80vh;
+    background-image: url('/images/paper_background.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 2rem;
+    box-shadow: 5px 4px 24px black;
+}
+
+.page.live {
+    display: block;
+  }
+.page.hidden {
+    display: none;
+}
+
+h1 {
+    font-size: 3rem;
+    color: #004888;
+}
+
+h3 {
+    font-size: 1.5rem;
+    margin: 3rem 0px;
+    color: #00455F;
+}
+
+input[type="number"]{
+    font-size: 2rem;
+}
+
+button {
+    font-size: 2rem;
+    padding: 0.5rem 1rem;
+    box-shadow: 5px 5px 15px black;
+}
+
+input[type="text"]{
+    font-size: 2rem;
+    padding: 0.5rem 0.5rem;
+}
+
+.flex {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.player-list {
+    font-size: 2rem;
+}
+.player-list div {
+    width: 90%;
+    max-with: 360px;
+    display: flex;
+    margin: 0 auto 0.5rem;
+    justify-content: space-between;    
+}
+.player-list button {
+    margin-left: 2rem;
+}
+
+.holes-data {
+    margin-bottom: 2rem;
+    font-size: 2rem;
+}
+
+.holes-data div {
+    display: flex;
+}
+.holes-data div input[type="number"]{
+    width:1rem;
+}
+.holes-data div > * {
+    flex: 1;
+}

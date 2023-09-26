@@ -4,7 +4,7 @@ export default function PlayerEntryScreen({ currentPage, players, newPlayerName,
           name: newPlayerName, 
           scores: []
         };
-        
+
         for (let i=0; i<numberOfHoles; i++){
             newPlayer.scores.push(0);
         }
@@ -25,12 +25,16 @@ export default function PlayerEntryScreen({ currentPage, players, newPlayerName,
           <div className="player-list">
             { players.map( (player, key) => (<div key={key}>{player.name}<button onClick={()=>handleDeletePlayerAt(key)}>X</button></div>)) }            
           </div>
-          <div>
+          <div style={{ marginBottom: '2rem'}}>
             <input type="text" value={newPlayerName} onChange={(event)=> setNewPlayerName(event.target.value) } />
             <button disabled={newPlayerName.length === 0} onClick={handleAddNewPlayer}>Add</button>
           </div>
-          <button disabled={players.length === 0} onClick={()=>{ setCurrentHole(1); setCurrentPage(3); }}>Start Playing!</button><br />
+          <div className="flex">
+            <button onClick={() => setCurrentPage(1)} style={{marginRight: '2rem'}}>Back</button>
+            <button disabled={players.length === 0} onClick={()=>{ setCurrentHole(1); setCurrentPage(3); }}>Start Playing!</button>
+          </div>
+          
   
-          <button onClick={() => setCurrentPage(1)}>Back</button>
+          
         </div>);
   }
