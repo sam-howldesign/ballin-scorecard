@@ -71,7 +71,7 @@ input[type="text"]{
 }
 .player-list div {
     width: 90%;
-    max-with: 360px;
+    max-width: 360px;
     display: flex;
     margin: 0 auto 0.5rem;
     justify-content: space-between;    
@@ -81,16 +81,43 @@ input[type="text"]{
 }
 
 .holes-data {
-    margin-bottom: 2rem;
     font-size: 2rem;
+    display: flex;
+    width: 80%;
+    justify-content: space-between;
+    margin: 0 auto 2rem;
 }
 
-.holes-data div {
+.player-hole-score {
     display: flex;
+    justify-content: space-between;
 }
-.holes-data div input[type="number"]{
-    width:1rem;
+.player-hole-score input {
+    margin-left: 1rem;
 }
-.holes-data div > * {
-    flex: 1;
+
+.title-heading {
+    font-weight: bold;
+    margin-bottom: 2rem;
+}
+
+td:first-child {
+    text-align: start;
+}
+.table-container{
+    margin-bottom: 2rem;
+    overflow-x: auto;
+    background-color: #eee;
+}
+.totals-table {
+    margin: 0 auto;
+    font-size: 1.5rem;
+}
+.table-container th:last-child, .table-container td:last-child {
+    position: -webkit-sticky;
+    position: sticky;
+    min-width: 65px;
+    right: 0px;    
+    background-color: #eee;
+    border-left: 3px solid black;
 }

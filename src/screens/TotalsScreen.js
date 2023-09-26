@@ -7,7 +7,8 @@ export default function TotalsScreen({ currentPage, players, setCurrentPage, num
     return(
         <div className={"page " + (currentPage === 4 ? " live " : " hidden ")}>
             <h3>Totals Page!</h3>
-            <table style={{margin: '0 auto'}}>
+            <div className="table-container">
+            <table className="totals-table">
                 <thead>
                 <tr>
                     <th>Hole</th>
@@ -28,7 +29,13 @@ export default function TotalsScreen({ currentPage, players, setCurrentPage, num
                 }
                 </tbody>
             </table>
-            <button onClick={()=>setCurrentPage(3)}>Back</button>
+            </div>
+
+            <div className="flex">
+                <button  style={{marginRight: '2rem'}} onClick={()=>setCurrentPage(3)}>Back</button>
+                <button onClick={()=>window.location.reload(false)}>Start Over</button>
+            </div>
+            
         </div>
     );
   }

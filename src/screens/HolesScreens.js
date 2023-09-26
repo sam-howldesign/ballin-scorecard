@@ -38,10 +38,12 @@ export default function HolesScreens({ currentPage, currentHole, players, setPla
           <h3>Hole #{currentHole}</h3>
           
           <div className="holes-data">
+            <div className="players-hole">
+              <div className="title-heading">Players</div>
             {
               players.map( (player, key) => (
-                <div key={key}>
-                  {player.name} 
+                <div key={key} className="player-hole-score">
+                  <div>{player.name}</div>
                   <input type="number" min="0" max="9" value={ player.scores[currentHole - 1] ?? 0 } 
                     onChange={ 
                       (event) => { 
@@ -51,11 +53,20 @@ export default function HolesScreens({ currentPage, currentHole, players, setPla
                         setPlayers([...playerListCopy]); 
                       } 
                     } />
+                </div>
+              ) )
+            }
+            </div>
+            <div className="players-totals">
+              <div className="title-heading">Totals</div>
+            {
+              players.map( (player, key) => (
+                <div key={key}>
                   {player.scores.reduce((a,c)=> parseInt(a) + parseInt(c ?? 0), 0)}
                 </div>
               ) )
-  
-            }
+            } 
+            </div>
           </div>
           <div className="flex">
             <button style={{marginRight: '2rem'}} onClick={ handlePreviousHoleClick }>{ previousHoleMessage() }</button>

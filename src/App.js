@@ -66,8 +66,7 @@ function App() {
         numberOfHoles={numberOfHoles}
       />       
 
-      <DebugState />
-
+      {/*<DebugState />*/}
     </div>
   );
 }
